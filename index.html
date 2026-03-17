@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WMIR 菜單管理後台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <span class="brand-badge">WMIR</span>
+        <h1>Wanna Make It Rain</h1>
+        <p>靜態版菜單管理工作台</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-store="breakfast">早餐店</button>
+        <button class="nav-btn" data-store="tofu">豆花店</button>
+        <button class="nav-btn" data-store="drink">手搖店</button>
+        <button class="nav-btn" data-store="noodles">麵店</button>
+      </nav>
+
+      <div class="sidebar-actions">
+        <label class="file-label">
+          匯入 menu-data.json
+          <input id="importFileInput" type="file" accept=".json,application/json" hidden />
+        </label>
+        <button id="exportJsonBtn" class="primary-btn">匯出新的 menu-data.json</button>
+      </div>
+
+      <div class="sidebar-tip">
+        <strong>提醒</strong>
+        <p>這是靜態版後台。修改完成後，請把匯出的新 JSON 上傳到 sharedmenu，前台重新整理後才會看到更新。</p>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Menu Studio</p>
+          <h2 id="storeTitle">早餐店</h2>
+          <p id="storeSubtitle" class="muted-text">管理該店的商品、分類與選項。</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="resetSampleBtn" class="ghost-btn">恢復目前載入資料</button>
+        </div>
+      </header>
+
+      <section class="panel-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">商品列表</p>
+              <h3>目前菜單</h3>
+            </div>
+          </div>
+          <div id="menuList" class="menu-list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Editor</p>
+              <h3 id="editorTitle">新增商品</h3>
+            </div>
+          </div>
+
+          <form id="menuForm" class="menu-form">
+            <label>
+              <span>商品名稱</span>
+              <input id="itemName" type="text" placeholder="例如：招牌蛋餅" />
+            </label>
+
+            <label>
+              <span>圖片網址</span>
+              <input id="itemImage" type="text" placeholder="貼上圖片網址" />
+            </label>
+
+            <div class="grid-two">
+              <label>
+                <span>價格</span>
+                <input id="itemPrice" type="number" placeholder="例如：65" />
+              </label>
+
+              <label>
+                <span>分類</span>
+                <input id="itemCategory" type="text" placeholder="例如：蛋餅" />
+              </label>
+            </div>
+
+            <label>
+              <span>商品描述</span>
+              <textarea id="itemDescription" rows="3" placeholder="簡短描述這個品項"></textarea>
+            </label>
+
+            <label>
+              <span>一般選項（用逗號分隔）</span>
+              <input id="itemOptions" type="text" placeholder="例如：不要香菜,不要蔥,加蛋" />
+            </label>
+
+            <label>
+              <span>甜度選項（手搖店用，逗號分隔）</span>
+              <input id="itemSweetness" type="text" placeholder="例如：全糖,半糖,微糖,無糖" />
+            </label>
+
+            <label>
+              <span>冰量選項（手搖店用，逗號分隔）</span>
+              <input id="itemIce" type="text" placeholder="例如：正常冰,少冰,微冰,去冰" />
+            </label>
+
+            <label>
+              <span>加料選項（手搖店用，逗號分隔）</span>
+              <input id="itemToppings" type="text" placeholder="例如：珍珠,椰果,寒天" />
+            </label>
+
+            <div class="form-actions">
+              <button type="submit" class="primary-btn">儲存商品</button>
+              <button type="button" id="cancelEditBtn" class="ghost-btn">清空 / 取消編輯</button>
+            </div>
+          </form>
+        </section>
+      </section>
+
+      <section class="panel notice-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">JSON Preview</p>
+            <h3>目前資料預覽</h3>
+          </div>
+        </div>
+        <pre id="jsonPreview" class="json-preview"></pre>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
